@@ -97,14 +97,6 @@ export class GalaxyScene extends Scene {
     }
   
     update(time: any, delta: any): void {
-
-      if (this?.cursorKeys?.left?.isDown) {
-        this._sprite.setVelocityX(-10);
-      } else if (this?.cursorKeys?.right?.isDown) {
-        this._sprite.setVelocityX(10);
-      } else {
-        this._sprite.setVelocityX(0);
-      }
       if (this?.cursorKeys?.up?.isDown) {
         this._sprite.setVelocityY(-10);
       } else if (this?.cursorKeys?.down?.isDown) {
@@ -112,7 +104,24 @@ export class GalaxyScene extends Scene {
       } else {
         this._sprite.setVelocityY(0);
       }
-      this.cameras.main.centerOn(this._sprite.x, this._sprite.y);
 
+      if (this?.cursorKeys?.shift?.isUp) {
+        if (this?.cursorKeys?.left?.isDown) {
+            this._sprite.setVelocityX(-10);
+        } else if (this?.cursorKeys?.right?.isDown) {
+            this._sprite.setVelocityX(10);
+        } else {
+            this._sprite.setVelocityX(0);
+        }
+      } else {
+        if (this.cursorKeys?.left?.isDown && this.cursorKeys?.right?.isUp) {
+          this._sprite.setAngularVelocity(-0.05);
+        }
+        if (this.cursorKeys?.right?.isDown && this.cursorKeys?.left?.isUp) {
+          this._sprite.setAngularVelocity(0.05);
+        }
+      }
+
+      this.cameras.main.centerOn(this._sprite.x, this._sprite.y);
     }
 }
